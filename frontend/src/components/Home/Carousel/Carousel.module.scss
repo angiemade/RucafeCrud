@@ -1,0 +1,42 @@
+/* Carousel.module.scss */
+.Carousel_container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    background-color: #daa97f;
+    gap: 4px;
+    border-radius: 12px;
+    margin: 4px 8px;
+    padding: 4px 12px;
+  }
+  
+  .Carousel_item {
+    scroll-snap-align: center;
+    flex: 0 0 45%;
+    box-sizing: border-box;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    text-align: center;
+    margin: 4px 0;
+  
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 1px solid black;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+  
+    .description {
+      font-size: 16px;
+      color: #333;
+      margin-top: 10px;
+    }
+  }
+  

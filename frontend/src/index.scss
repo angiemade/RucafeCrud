@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Merienda&display=swap');
+
+// Variables
+$background-primary: #ffffff;
+$background-secondary: #000000;
+$background-tercerary: #7e7e7e;
+$text-color: #464646;
+$button-menu-primary: #daa97f;
+
+// Media queries breakpoints
+$sm: 430px;
+$md: 744px;
+$lg: 1440px;
+
+// Estilos globales
+:root {
+  font-family: "Merienda", cursive;
+  color: $text-color;
+  background-color: $background-primary;
+}
+
+.notranslate {
+  font-family: "Merienda", cursive;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Merienda", cursive;
+  color: $text-color;
+  background-color: $background-primary;
+}
+
+.container {
+  width: 100%;
+  margin: auto;
+}
+
+// Posicionamiento
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Tipografía
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+h1 {
+  font-size: 3.815rem;
+  line-height: 1.6;
+}
+
+h2 {
+  font-size: 3.052rem;
+  line-height: 1.6;
+}
+
+h3 {
+  font-size: 2.441rem;
+  line-height: 1.6;
+}
+
+h4 {
+  font-size: 1.953rem;
+  line-height: 1.6;
+}
+
+h5 {
+  font-size: 1.563rem;
+  line-height: 1.6;
+}
+
+h6 {
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+// Responsive
+@media (min-width: $sm) {
+  .container {
+    max-width: 406px;
+  }
+}
+
+@media (min-width: $md) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: $lg) {
+  .container {
+    max-width: 960px;
+  }
+}

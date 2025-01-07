@@ -1,0 +1,34 @@
+.footerContainer {
+    text-align: center;
+  }
+  
+  .instagramButton {
+    display: block; // Asegura que esté en su propia línea
+    background-color: #daa97f;
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 20px; // Espacio debajo del botón para la imagen
+    font-size: 16px;
+    transition: background-color 0.3s ease; // Animación para el hover
+  
+    &:hover {
+      background-color: #c98b5a; // Color al hacer hover
+    }
+  
+    i {
+      margin-right: 8px;
+      color: #333;
+    }
+  }
+  
+  .imageContainer {
+    display: block;
+  
+    img {
+      margin-top: 20px;
+    }
+  }
+  

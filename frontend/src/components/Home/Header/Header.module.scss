@@ -1,0 +1,33 @@
+// Variables
+$background-primary: #ffffff;
+$background-secondary: #666666;
+$background-terceary: #7e7e7e;
+$text-color: #464646;
+$button-menu-primary: #daa97f;
+
+.Header {
+  height: 150px;
+
+  .Logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid $background-secondary;
+    border-left: 2px solid $background-secondary;
+    border-right: 2px solid $background-secondary;
+    border-radius: 8px;
+    box-shadow: 0 0 6px inset #000000;
+    height: 90px;
+    position: relative;
+
+    img {
+      position: absolute;
+      bottom: -50px;
+      max-width: 150px;
+      background-color: #d38858;
+      border-radius: 50%;
+      padding: 10px;
+      box-shadow: 0 0 6px #000000;
+    }
+  }
+}

@@ -1,0 +1,96 @@
+.Pizzas {
+  min-height: 100vh;
+  background-image: url(../../../../../assets/Pizzas.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.Boton_retroceso {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 6px;
+  width: auto;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.Boton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #daa97f;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.534);
+  font-size: 16px;
+  font-weight: bold;
+  font-family: 'Merienda', cursive;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  max-width: 392px;
+
+  &:hover {
+    background-color: #c98b5a;
+  }
+}
+
+.preciosBox {
+  display: flex;
+  gap: 22px;
+  justify-content: flex-end;
+}
+
+.menu {
+  padding: 20px;
+  background-color: #cdcccc8c;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 12px 8px;
+
+  .titulo {
+    font-size: 24px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .items {
+    list-style: none;
+    padding: 0;
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #ddd;
+
+      .itemName {
+        font-weight: bold;
+      }
+
+      .itemDescription {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #6c757d;
+      }
+
+      .itemPriceContainer {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .itemPrice {
+        font-weight: bold;
+        color: #464646;
+        background-color: #daa97f;
+        padding: 0px 4px;
+        border-radius: 8px;
+      }
+    }
+  }
+}
