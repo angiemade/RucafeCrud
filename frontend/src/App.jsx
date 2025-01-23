@@ -1,16 +1,17 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Home from './components/Home/Home'
-import Sandwiches from './components/MenuOptions/Sandwiches/Sandwiches'
-import Licuados from './components/MenuOptions/Licuados/Licuados'
-import DesayunosMeriendas from './components/MenuOptions/DesayunosMeriendas/DesayunosMeriendas'
-import Bebidas from './components/MenuOptions/Bebidas/Bebidas'
-import AlmuerzosCenas from './components/MenuOptions/AlmuerzosCenas/AlmuerzosCenas'
-import CafeteriaPanaderia from './components/MenuOptions/CafeteriaPanaderia/CafeteriaPanaderia'
-import ParaPicar from './components/MenuOptions/AlmuerzosCenas/MenuAlmuerzosCena/ParaPicar/ParaPicar'
-import Pizzas from './components/MenuOptions/AlmuerzosCenas/MenuAlmuerzosCena/Pizzas/Pizzas'
-import MilanesasAlPlato from './components/MenuOptions/AlmuerzosCenas/MenuAlmuerzosCena/MilanesasAlPlato/MilanesasAlPlato'
-import HamburguesaSandwiches from './components/MenuOptions/AlmuerzosCenas/MenuAlmuerzosCena/HamburguesaSandwiches/HamburguesaSandwiches'
+import Home from './components/User/Home/Home'
+import Sandwiches from './components/User/MenuOptions/Sandwiches/Sandwiches'
+import Licuados from './components/User/MenuOptions/Licuados/Licuados'
+import DesayunosMeriendas from './components/User/MenuOptions/DesayunosMeriendas/DesayunosMeriendas'
+import Bebidas from './components/User/MenuOptions/Bebidas/Bebidas'
+import AlmuerzosCenas from './components/User/MenuOptions/AlmuerzosCenas/AlmuerzosCenas'
+import CafeteriaPanaderia from './components/User/MenuOptions/CafeteriaPanaderia/CafeteriaPanaderia'
+import ParaPicar from './components/User/MenuOptions/AlmuerzosCenas/MenuAlmuerzosCena/ParaPicar/ParaPicar'
+import Pizzas from './components/User/MenuOptions/AlmuerzosCenas/MenuAlmuerzosCena/Pizzas/Pizzas'
+import MilanesasAlPlato from './components/User/MenuOptions/AlmuerzosCenas/MenuAlmuerzosCena/MilanesasAlPlato/MilanesasAlPlato'
+import HamburguesaSandwiches from './components/User/MenuOptions/AlmuerzosCenas/MenuAlmuerzosCena/HamburguesaSandwiches/HamburguesaSandwiches'
+import HomeAdmin from './components/Admin/HomeAdmin/HomeAdmin'
 
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
           <Route exact path="/pizzas" element={<Pizzas />} />
           <Route exact path="/al-plato" element={<MilanesasAlPlato />} />
           <Route exact path="/hamburguesas-y-sandwiches" element={<HamburguesaSandwiches />} />
+          <Route exact path="/admin" element={< HomeAdmin/>} />
         </Routes>
       </div>
     </Router>
