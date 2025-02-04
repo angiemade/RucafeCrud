@@ -1,32 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './MilanesasAlPlato.module.scss';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../../../Home/Header/Header';
 
 export default function MilanesasAlPlato() {
-  const Milanesas_Items = [
-    { name: "Milanesa Común con papas o ensalada", descripcion: "", price: "$8400" },
-    { name: "Milanesa Napolitana con papas o ensalada", descripcion: "", price: "$8900" },
-    { name: "Milanesa a Caballo con papas o ensalada", descripcion: "", price: "$8900" },
-    { name: "Milanesa a la Suiza con papas o ensalada", descripcion: "", price: "$9300" },
-    { name: "Milanesa de pollo Común con papas o ensalada", descripcion: "", price: "$8100" },
-    { name: "Milanesa de pollo Napolitana con papas o ensalada", descripcion: "", price: "$8600" },
-    { name: "Milanesa de pollo a Caballo con papas o ensalada", descripcion: "", price: "$8600" },
-    { name: "Milanesa de pollo a la Suiza con papas o ensalada", descripcion: "", price: "$9000" },
-  ];
-
+  const [milanesasItems, setMilanesasItems] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Obtener productos de la subcategoría "Milanesas al Plato"
+    fetch('http://localhost:3001/productos/filter?subcategoria=Milanesas%20al%20Plato')
+      .then((res) => res.json())
+      .then((data) => setMilanesasItems(data))
+      .catch((error) =>
+        console.error('Error fetching Milanesas al Plato items:', error)
+      );
+  }, []);
 
   const ItemsList = ({ items }) => (
     <ul className={style.items}>
       {items.map((item, index) => (
         <li key={index} className={style.item}>
           <div>
-            <p className={style.itemName}>{item.name}</p>
-            {item.descripcion && <p className={style.itemDescription}>{item.descripcion}</p>}
+            <p className={style.itemName}>{item.nombre}</p>
+            {item.descripcion && (
+              <p className={style.itemDescription}>{item.descripcion}</p>
+            )}
           </div>
           <div className={style.itemPriceContainer}>
-            <span className={style.itemPrice}>{item.price}</span>
+            <span className={style.itemPrice}>${parseInt(item.precio)}</span>
           </div>
         </li>
       ))}
@@ -35,13 +37,15 @@ export default function MilanesasAlPlato() {
 
   return (
     <div className={style.MilanesasAlPlato}>
-       <Header /> 
+      <Header />
       <div className={style.Boton_retroceso}>
-        <button className={style.Boton} onClick={() => navigate(-1)}>Atrás</button>
+        <button className={style.Boton} onClick={() => navigate(-1)}>
+          Atrás
+        </button>
       </div>
       <div className={style.menu}>
         <h2 className={style.titulo}>Milanesas al Plato</h2>
-        <ItemsList items={Milanesas_Items} />
+        <ItemsList items={milanesasItems} />
       </div>
     </div>
   );

@@ -1,27 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './Pizzas.module.scss';
 import Header from '../../../../Home/Header/Header';
 import { useNavigate } from 'react-router-dom';
 
 export default function Pizzas() {
-  const P_Items = [
-    { name: "Común / Muzzarella", descripcion: "Queso muzzarella + Aceitunas", price1: "$9800", price2: "$5800" },
-    { name: "Especial", descripcion: "Queso muzzarella, Jamón cocido + Aceitunas y Morrones", price1: "$10100", price2: "$5900" },
-    { name: "Fugazzeta", descripcion: "Queso muzzarella + Cebolla + Aceitunas", price1: "$10100", price2: "$5900" },
-    { name: "Napolitana", descripcion: "Queso muzzarella + Tomate + Aceitunas", price1: "$10000", price2: "$6000" },
-    { name: "Ternera", descripcion: "Queso muzzarella + Ternera + Aceitunas y Morrones", price1: "$11300", price2: "$6500" },
-    { name: "Calabresa", descripcion: "Queso muzzarella + Pepperoni + Aceitunas", price1: "$11300", price2: "$6500" },
-    { name: "Rúcula", descripcion: "Queso muzzarella + Rúcula + Tomate", price1: "S/P", price2: "S/P" },
-    { name: "Ruca", descripcion: "Queso muzarella + Papas fritas + Aceitunas", price1: "$11300", price2: "$6500" },
-  ];
-
+  const [pizzaItems, setPizzaItems] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Obtener productos de la subcategoría "Pizzas"
+    fetch('http://localhost:3001/productos/filter?subcategoria=Pizzas')
+      .then((res) => res.json())
+      .then((data) => setPizzaItems(data))
+      .catch((error) => console.error('Error fetching pizzas:', error));
+  }, []);
+
+  // Función para formatear el precio: si es numérico, lo muestra como entero con "$"
+  const formatPrice = (price) =>
+    isNaN(Number(price)) ? price : `$${parseInt(price)}`;
 
   return (
     <div className={style.Pizzas}>
       <Header />
       <div className={style.Boton_retroceso}>
-        <button className={style.Boton} onClick={() => navigate(-1)}>Atrás</button>
+        <button className={style.Boton} onClick={() => navigate(-1)}>
+          Atrás
+        </button>
       </div>
       <div className={style.menu}>
         <h2 className={style.titulo}>Pizzas</h2>
@@ -30,15 +34,17 @@ export default function Pizzas() {
           <p>4 porciones</p>
         </div>
         <ul className={style.items}>
-          {P_Items.map((item, index) => (
+          {pizzaItems.map((item, index) => (
             <li key={index} className={style.item}>
               <div>
-                <p className={style.itemName}>{item.name}</p>
-                {item.descripcion && <p className={style.itemDescription}>{item.descripcion}</p>}
+                <p className={style.itemName}>{item.nombre}</p>
+                {item.descripcion && (
+                  <p className={style.itemDescription}>{item.descripcion}</p>
+                )}
               </div>
               <div className={style.itemPriceContainer}>
-                <span className={style.itemPrice}>{item.price1}</span>
-                <span className={style.itemPrice}>{item.price2}</span>
+                <span className={style.itemPrice}>{formatPrice(item.precio)}</span>
+                <span className={style.itemPrice}>{formatPrice(item.precio2)}</span>
               </div>
             </li>
           ))}

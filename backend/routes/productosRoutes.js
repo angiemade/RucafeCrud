@@ -27,6 +27,40 @@ router.get("/", (req, res) => {
   );
 });
 
+// OBTENER PRODUCTOS POR SUBCATEGORÍA
+// Ejemplo de llamada: GET /productos/filter?subcategoria=Desayunos%20y%20Meriendas
+router.get("/filter", (req, res) => {
+  const { subcategoria } = req.query;
+  if (!subcategoria) {
+    return res.status(400).send('El parámetro "subcategoria" es obligatorio');
+  }
+  const db = req.db;
+  db.query(
+    `SELECT productos.*, subcategorias.nombre AS subcategoria_nombre 
+     FROM productos 
+     LEFT JOIN subcategorias ON productos.subcategoria_id = subcategorias.id 
+     WHERE subcategorias.nombre = ?`,
+    [subcategoria],
+    (err, result) => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+      res.status(200).json(result);
+    }
+  );
+});
+
+// OBTENER TODAS LAS CATEGORÍAS
+router.get("/", (req, res) => {
+  const db = req.db;
+  db.query("SELECT * FROM categorias", (err, results) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    res.status(200).json(results);
+  });
+});
+
 // OBTENER UN PRODUCTO POR ID
 router.get("/:id", (req, res) => {
   const { id } = req.params;
@@ -48,67 +82,6 @@ router.get("/:id", (req, res) => {
     }
   );
 });
-
-
-
-// Ruta para obtener el menú
-router.get("/menu", (req, res) => {
-  const db = req.db;
-  db.query(
-    `SELECT 
-       c.nombre AS categoria_nombre,
-       s.nombre AS subcategoria_nombre,
-       p.nombre AS producto_nombre,
-       p.descripcion,
-       p.precio,
-       p.precio2
-     FROM productos p
-     LEFT JOIN subcategorias s ON p.subcategoria_id = s.id
-     LEFT JOIN categorias c ON s.categoria_id = c.id`,
-    (err, result) => {
-      if (err) {
-        return res.status(500).send("Error al obtener el menú");
-      }
-
-      const menu = result.reduce((acc, item) => {
-        const {
-          categoria_nombre,
-          subcategoria_nombre,
-          producto_nombre,
-          descripcion,
-          precio,
-          precio2,
-        } = item;
-
-        // Crear la categoría si no existe
-        if (!acc[categoria_nombre]) {
-          acc[categoria_nombre] = {};
-        }
-
-        // Crear la subcategoría si no existe
-        if (!acc[categoria_nombre][subcategoria_nombre]) {
-          acc[categoria_nombre][subcategoria_nombre] = [];
-        }
-
-        // Agregar el producto a la subcategoría
-        acc[categoria_nombre][subcategoria_nombre].push({
-          nombre: producto_nombre,
-          descripcion,
-          precio,
-          precio2,
-        });
-
-        return acc;
-      }, {});
-
-      res.status(200).json(menu);
-    }
-  );
-});
-
-
-
-
 
 
 // CREAR UN PRODUCTO
@@ -174,5 +147,6 @@ router.delete("/:id", (req, res) => {
     }
   });
 });
+
 
 module.exports = router;

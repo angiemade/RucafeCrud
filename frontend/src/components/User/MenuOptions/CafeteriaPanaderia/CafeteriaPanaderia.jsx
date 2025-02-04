@@ -1,47 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import style from '../CafeteriaPanaderia/CafeteriaPanaderia.module.scss';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../Home/Header/Header';
 
 export default function CafeteriaPanaderia() {
-  const Ca_items = [
-    { name: "Pocillo / Cortado", descripcion: "Café o Café con leche Chico", price: "$1700" },
-    { name: "Café en jarrita", descripcion: "Café o Café con leche en Jarrita", price: "$1800" },
-    { name: "Café con leche", descripcion: "Grande", price: "$2200" },
-    { name: "Cortado doble", descripcion: "Doble ración de café", price: "$2300" },
-    { name: "Macchiato", descripcion: "Café con espuma", price: "$2400" },
-    { name: "Lágrima", descripcion: "Poco café y mucha leche", price: "$2200" },
-    { name: "Cappuccino", descripcion: "Café con leche y mucha espuma con canela o chocolate", price: "$3000" },
-    { name: "Té con leche", descripcion: "", price: "$2200" },
-    { name: "Té", descripcion: "", price: "$1800" },
-    { name: "Mate cocido", descripcion: "", price: "$1800" },
-    { name: "Submarino", descripcion: "", price: "$2900" },
-    { name: "Capuchino con Crema", descripcion: "", price: "$3700" },
-  ];
-
-  const P_items = [
-    { name: "Tortilla", descripcion: "", price: "$800" },
-    { name: "Tostadas", descripcion: "Negra, negra con semilla, de campo, pan francés", price: "$800" },
-    { name: "Medialunas", descripcion: "", price: "$800" },
-    { name: "Medialunas con jamón y queso", descripcion: "", price: "$2100" },
-    { name: "Croissant", descripcion: "", price: "S/P" },
-    { name: "Croissant con jamón y queso", descripcion: "", price: "S/P" },
-    { name: "Alfajores", descripcion: "(Consultar variedad)", price: "S/P" },
-    { name: "Medialuna con Dulce de Leche", descripcion: "", price: "$2100" },
-  ];
-
+  const [caItems, setCaItems] = useState([]);
+  const [pItems, setPItems] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Obtener productos de la subcategoría "Cafeteria"
+    fetch('http://localhost:3001/productos/filter?subcategoria=Cafeteria')
+      .then((res) => res.json())
+      .then((data) => {
+        setCaItems(data);
+      })
+      .catch((error) => console.error('Error fetching Cafeteria items:', error));
+
+    // Obtener productos de la subcategoría "Panaderia"
+    fetch('http://localhost:3001/productos/filter?subcategoria=Panaderia')
+      .then((res) => res.json())
+      .then((data) => {
+        setPItems(data);
+      })
+      .catch((error) => console.error('Error fetching Panaderia items:', error));
+  }, []);
 
   const ItemsList = ({ items }) => (
     <ul className={style.items}>
       {items.map((item, index) => (
         <li key={index} className={style.item}>
           <div>
-            <p className={style.itemName}>{item.name}</p>
-            {item.descripcion && <p className={style.itemDescription}>{item.descripcion}</p>}
+            <p className={style.itemName}>{item.nombre}</p>
+            {item.descripcion && (
+              <p className={style.itemDescription}>{item.descripcion}</p>
+            )}
           </div>
           <div className={style.itemPriceContainer}>
-            <span className={style.itemPrice}>{item.price}</span>
+            <span className={style.itemPrice}>
+              ${parseInt(item.precio)}
+            </span>
+            {item.precio2 && (
+              <span className={style.itemPrice}>
+                ${parseInt(item.precio2)}
+              </span>
+            )}
           </div>
         </li>
       ))}
@@ -50,15 +53,17 @@ export default function CafeteriaPanaderia() {
 
   return (
     <div className={style.CafeteriaPanaderia}>
-      <Header /> 
+      <Header />
       <div className={style.Boton_retroceso}>
-        <button className={style.Boton} onClick={() => navigate(-1)}>Atrás</button>
+        <button className={style.Boton} onClick={() => navigate(-1)}>
+          Atrás
+        </button>
       </div>
       <div className={style.menu}>
         <h2 className={style.titulo}>Cafetería</h2>
-        <ItemsList items={Ca_items} />
+        <ItemsList items={caItems} />
         <h2 className={style.titulo}>Panadería</h2>
-        <ItemsList items={P_items} />
+        <ItemsList items={pItems} />
       </div>
     </div>
   );

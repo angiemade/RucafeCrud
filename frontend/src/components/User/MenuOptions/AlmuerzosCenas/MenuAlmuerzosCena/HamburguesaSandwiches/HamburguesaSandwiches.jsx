@@ -1,28 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './HamburguesaSandwiches.module.scss';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../../../Home/Header/Header';
 
 export default function HamburguesaSandwiches() {
-  const hamburguesaItems = [
-    { name: "Común / Clásica", descripcion: "Con lechuga, tomate y aderezos", price: "$5800" },
-    { name: "Super", descripcion: "Con Jamón, queso, lechuga, tomate y aderezos", price: "$6800" },
-    { name: "Ruca", descripcion: "Con Huevo, jamón, queso, lechuga, tomate y aderezos + Papas Fritas", price: "$7800" },
-  ];
-
-  const lomitoItems = [
-    { name: "Común / Clásico", descripcion: "Con lechuga, tomate y aderezos", price: "$7200" },
-    { name: "Super", descripcion: "Con Jamón, queso, lechuga, tomate y aderezos", price: "$8200" },
-    { name: "Ruca", descripcion: "Con Huevo, jamón, queso, lechuga, tomate y aderezos + Papas Fritas", price: "$9200" },
-  ];
-
-  const milanesaItems = [
-    { name: "Común / Clásica", descripcion: "Con lechuga, tomate y aderezos", price: "$6600" },
-    { name: "Super", descripcion: "Con Jamón, queso, lechuga, tomate y aderezos", price: "$7600" },
-    { name: "Ruca", descripcion: "Con Huevo, jamón, queso, lechuga, tomate y aderezos + Papas Fritas", price: "$8600" },
-  ];
-
+  const [hamburguesaItems, setHamburguesaItems] = useState([]);
+  const [milanesaItems, setMilanesaItems] = useState([]);
+  const [lomitoItems, setLomitoItems] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Obtener productos de la subcategoría "Hamburguesas"
+    fetch('http://localhost:3001/productos/filter?subcategoria=Hamburguesas')
+      .then((res) => res.json())
+      .then((data) => setHamburguesaItems(data))
+      .catch((error) =>
+        console.error('Error fetching Hamburguesas items:', error)
+      );
+
+    // Obtener productos de la subcategoría "Milanesas"
+    fetch('http://localhost:3001/productos/filter?subcategoria=Sandwiches%20de%20milanesa')
+      .then((res) => res.json())
+      .then((data) => setMilanesaItems(data))
+      .catch((error) =>
+        console.error('Error fetching Milanesas items:', error)
+      );
+
+    // Obtener productos de la subcategoría "Lomitos"
+    fetch('http://localhost:3001/productos/filter?subcategoria=Lomitos')
+      .then((res) => res.json())
+      .then((data) => setLomitoItems(data))
+      .catch((error) =>
+        console.error('Error fetching Lomitos items:', error)
+      );
+  }, []);
 
   const ItemsList = ({ title, items }) => (
     <>
@@ -31,11 +42,15 @@ export default function HamburguesaSandwiches() {
         {items.map((item, index) => (
           <li key={index} className={style.item}>
             <div>
-              <p className={style.itemName}>{item.name}</p>
-              {item.descripcion && <p className={style.itemDescription}>{item.descripcion}</p>}
+              <p className={style.itemName}>{item.nombre}</p>
+              {item.descripcion && (
+                <p className={style.itemDescription}>{item.descripcion}</p>
+              )}
             </div>
             <div className={style.itemPriceContainer}>
-              <span className={style.itemPrice}>{item.price}</span>
+              <span className={style.itemPrice}>
+                ${parseInt(item.precio)}
+              </span>
             </div>
           </li>
         ))}
@@ -45,9 +60,11 @@ export default function HamburguesaSandwiches() {
 
   return (
     <div className={style.HamburguesasSandwiches}>
-       <Header /> 
+      <Header />
       <div className={style.Boton_retroceso}>
-        <button className={style.Boton} onClick={() => navigate(-1)}>Atrás</button>
+        <button className={style.Boton} onClick={() => navigate(-1)}>
+          Atrás
+        </button>
       </div>
       <div className={style.menu}>
         <ItemsList title="Hamburguesas" items={hamburguesaItems} />
