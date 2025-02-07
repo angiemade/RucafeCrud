@@ -10,6 +10,42 @@ router.use((req, res, next) => {
   next();
 });
 
+// En productosRoutes.js (endpoint para búsqueda)
+// OBTENER PRODUCTOS POR TÉRMINO DE BÚSQUEDA Y/O CATEGORÍA
+// Ejemplo: GET /productos/search?term=cafe&categoria=5
+router.get("/search", (req, res) => {
+  const { term, categoria } = req.query;
+  const db = req.db;
+  let query = `
+    SELECT productos.*, subcategorias.nombre AS subcategoria_nombre, categorias.id AS categoria_id
+    FROM productos
+    LEFT JOIN subcategorias ON productos.subcategoria_id = subcategorias.id
+    LEFT JOIN categorias ON subcategorias.categoria_id = categorias.id
+  `;
+  let params = [];
+  const conditions = [];
+  
+  if (term) {
+    conditions.push("(productos.nombre LIKE ? OR productos.descripcion LIKE ?)");
+    params.push(`%${term}%`, `%${term}%`);
+  }
+  
+  if (categoria) {
+    conditions.push("categorias.id = ?");
+    params.push(categoria);
+  }
+  
+  if (conditions.length > 0) {
+    query += " WHERE " + conditions.join(" AND ");
+  }
+  
+  db.query(query, params, (err, results) => {
+    if (err) return res.status(500).send(err);
+    res.status(200).json(results);
+  });
+});
+
+
 // OBTENER TODOS LOS PRODUCTOS
 router.get("/", (req, res) => {
   const db = req.db;
@@ -26,6 +62,7 @@ router.get("/", (req, res) => {
     }
   );
 });
+
 
 // OBTENER PRODUCTOS POR SUBCATEGORÍA
 // Ejemplo de llamada: GET /productos/filter?subcategoria=Desayunos%20y%20Meriendas
