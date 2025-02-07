@@ -29,10 +29,21 @@ export default function Menu() {
         return '/bebidas';
       case 'Almuerzos y Cenas':
         return '/almuerzos-cenas';
+      // Nuevos casos:
+      case 'Para Picar':
+        return '/para-picar';
+      case 'Pizzas':
+        return '/pizzas';
+      case 'Hamburguesas y Sandwiches':
+        return '/hamburguesas-y-sandwiches';
+      case 'Al Plato':  // <--- Aquí actualizas el nombre
+        return '/al-plato';
       default:
-        return '/'; // O una ruta por defecto
+        return '/';
     }
   };
+  
+  
 
   const handleNavigation = (categoryName) => {
     const route = mapCategoryToRoute(categoryName);

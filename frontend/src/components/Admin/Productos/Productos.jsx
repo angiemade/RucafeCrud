@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Barraproductos from "./BarraProductos";
 
 function Productos() {
   const [productos, setProductos] = useState([]);
@@ -81,6 +82,7 @@ const guardarProducto = () => {
   return (
     <div className="container-fluid" style={{ padding: "20px", borderRadius: "20px" }}>
       <h4 style={{ fontWeight: "bold", color: "#000" }}>Gestión de Productos</h4>
+      <div>  <Barraproductos/>  </div>
       {productos.map((producto) => (
         <div
           key={producto.id}

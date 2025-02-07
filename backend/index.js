@@ -29,6 +29,7 @@ app.use((req,res,next)=>{
 app.use('/categorias', require('./routes/categoriasRoutes'));
 app.use('/subcategorias', require('./routes/subcategoriasRoutes'));
 app.use('/productos', require('./routes/productosRoutes'));
+app.use('/promos', require('./routes/promosRoutes'));
 
 
 app.listen(3001,()=>{

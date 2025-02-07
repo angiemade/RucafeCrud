@@ -9,8 +9,8 @@ export default function MilanesasAlPlato() {
 
   useEffect(() => {
     // Obtener productos de la subcategoría "Milanesas al Plato"
-    fetch('http://localhost:3001/productos/filter?subcategoria=Milanesas%20al%20Plato')
-      .then((res) => res.json())
+    fetch('http://localhost:3001/productos/filter?subcategoria=Milanesas%20al%20plato')
+    .then((res) => res.json())
       .then((data) => setMilanesasItems(data))
       .catch((error) =>
         console.error('Error fetching Milanesas al Plato items:', error)
