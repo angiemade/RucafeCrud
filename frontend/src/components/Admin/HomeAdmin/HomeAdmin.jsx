@@ -1,26 +1,3 @@
-// import React from 'react'
-// // import Categorias from '../Categorias/Categorias'
-// // import Subcategorias from '../Subcategorias/Subcategorias'
-// import Productos from '../Productos/Productos'
-// import Promos from '../Promos/Promos'
-// import CrearProductos from '../Productos/CrearProductos'
-
-// function HomeAdmin() {
-//   return (
-//     <div>
-//       {/* <div> <Categorias/> </div>
-//       <div> <Subcategorias/> </div> */}
-//       <div><CrearProductos/></div>
-//       <div><Promos/></div>
-//       <div><Productos/></div>
-//     </div>
-//   )
-// }
-
-// export default HomeAdmin
-
-
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import CrearProductos from '../Productos/CrearProductos';
@@ -45,7 +22,7 @@ function HomeAdmin() {
           top: '20px',
           right: '20px',
           borderRadius: '25px',
-          backgroundColor: '#f8bfc4',
+          backgroundColor: '#C06D26',
           color: '#000',
           fontWeight: 'bold',
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
