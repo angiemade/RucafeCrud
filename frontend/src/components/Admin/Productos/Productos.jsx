@@ -203,6 +203,7 @@
 
 
 
+
 // Productos.jsx
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
@@ -254,6 +255,38 @@ function Productos() {
         .catch((error) => console.error("Error fetching products:", error));
     }
   }, [selectedCategory, searchTerm]);
+
+
+
+// ----> Nuevo useEffect para escuchar el evento "productoCreado"
+  useEffect(() => {
+    const handleProductoCreado = () => {
+      // Repetir la misma lógica de arriba para volver a obtener productos
+      if (selectedCategory || searchTerm) {
+        Axios.get("http://localhost:3001/productos/search", {
+          params: { term: searchTerm, categoria: selectedCategory },
+        })
+          .then((response) => setProductos(response.data))
+          .catch((error) => console.error("Error fetching filtered products:", error));
+      } else {
+        Axios.get("http://localhost:3001/productos")
+          .then((response) => setProductos(response.data))
+          .catch((error) => console.error("Error fetching products:", error));
+      }
+    };
+  
+    // Suscribirse al evento
+    window.addEventListener("productoCreado", handleProductoCreado);
+  
+    // Limpieza al desmontar
+    return () => {
+      window.removeEventListener("productoCreado", handleProductoCreado);
+    };
+  }, [selectedCategory, searchTerm]);
+
+
+
+
 
   // Manejar cambios en el formulario de edición
   const handleInputChange = (e) => {
@@ -439,4 +472,3 @@ function Productos() {
 }
 
 export default Productos;
-

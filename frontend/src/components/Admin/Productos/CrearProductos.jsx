@@ -68,6 +68,8 @@ function CrearProductos() {
           timer: 2000,
         });
         limpiarCampos();
+
+        window.dispatchEvent(new Event("productoCreado"));
       })
       .catch((error) => {
         console.error("Error al crear producto", error);
