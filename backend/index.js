@@ -30,6 +30,7 @@ app.use('/categorias', require('./routes/categoriasRoutes'));
 app.use('/subcategorias', require('./routes/subcategoriasRoutes'));
 app.use('/productos', require('./routes/productosRoutes'));
 app.use('/promos', require('./routes/promosRoutes'));
+app.use('/login', require('./routes/loginRoutes')); // La ruta coincide con el nombre del archivo (todo en minúsculas)
 
 
 app.listen(3001,()=>{
