@@ -15,7 +15,7 @@ function Categorias() {
 
     // Obtener todas las categorías
     const getCategorias = () => {
-        api.get("http://localhost:3001/categorias").then((response) => {
+        api.get("/categorias").then((response) => {
             setCategorias(response.data);
         });
     };
@@ -26,7 +26,7 @@ function Categorias() {
 
     // Agregar nueva categoría
     const addCategoria = () => {
-        api.post("http://localhost:3001/categorias", {
+        api.post("/categorias", {
             nombre: nombreCategoria,
         })
             .then(() => {
@@ -55,7 +55,7 @@ function Categorias() {
     };
 
     const putCategoria = () => {
-        api.put(`http://localhost:3001/categorias/${idCategoria}`, {
+        api.put(`/categorias/${idCategoria}`, {
             nombre: nombreCategoria,
         })
             .then(() => {
@@ -89,7 +89,7 @@ function Categorias() {
             confirmButtonText: "Sí, eliminar",
         }).then((result) => {
             if (result.isConfirmed) {
-                api.delete(`http://localhost:3001/categorias/${id}`).then(() => {
+                api.delete(`/categorias/${id}`).then(() => {
                     getCategorias();
                     Swal.fire({
                         title: "Eliminada!",
