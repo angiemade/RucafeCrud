@@ -1,17 +1,30 @@
 const express = require('express');
 const mysql2 = require('mysql2');
 const cors = require('cors');
+const {
+  PORT,
+  DB_HOST,
+  DB_USER,
+  DB_PASSWORD,
+  DB_NAME,
+  DB_PORT
+} = require('./config'); 
+
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
+
+//mysql://root:TJizpSLZMlUEgCYrAlBLYqlbzwlscXJT@yamanote.proxy.rlwy.net:28204/railway
 const db = mysql2.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'mysql',
-  database: 'rucafe',
+  host: DB_HOST,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_NAME,
+  port: DB_PORT, // importante para Railway
 });
+
 
 db.connect((err) => {
   if (err) {
@@ -33,6 +46,6 @@ app.use('/productos', require('./routes/productosRoutes'));
 app.use('/promos', require('./routes/promosRoutes'));
 app.use('/login', require('./routes/loginRoutes')); // Ruta para login
 
-app.listen(3001, () => {
-  console.log('Servidor escuchando en el puerto 3001');
+app.listen(PORT, () => {
+  console.log('Servidor escuchando en el puerto ',PORT);
 });
