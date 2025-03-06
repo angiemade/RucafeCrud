@@ -8,6 +8,7 @@
 //mysql://root:TJizpSLZMlUEgCYrAlBLYqlbzwlscXJT@yamanote.proxy.rlwy.net:28204/railway
 
 
+
 // config.js (CommonJS)
 require('dotenv').config(); // opcional si usas un .env local
 
