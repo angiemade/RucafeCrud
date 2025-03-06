@@ -4,6 +4,7 @@ import image2 from "../../../../assets/Promo1.png";
 import image3 from "../../../../assets/Promo2.png";
 import image4 from "../../../../assets/Promo3.png";
 import image1 from "../../../../assets/Promo4.png";
+import api from '../../../../../api'
 
 // Arreglo local de imágenes y textos alternativos (en el orden deseado)
 const localImages = [image1, image2, image3, image4];
@@ -13,10 +14,9 @@ export default function Carousel() {
   const [promos, setPromos] = useState([]);
 
   useEffect(() => {
-    // Obtener promociones desde el backend
-    fetch("http://localhost:3001/promos")
-      .then((res) => res.json())
-      .then((data) => setPromos(data))
+    // Obtener promociones desde el backend usando la instancia de Axios
+    api.get("/promos")
+      .then((res) => setPromos(res.data))
       .catch((error) => console.error("Error fetching promos:", error));
   }, []);
 

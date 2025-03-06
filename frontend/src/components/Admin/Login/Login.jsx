@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from '../../../assets/Logo.png';
+import api from '../../../../api'
 
 function Login() {
   const [password, setPassword] = useState('');
@@ -12,7 +13,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3001/login', { password });
+      const response = await api.post('/login', { password });
       if (response.status === 200) {
         localStorage.setItem('auth', 'true');
         navigate('/admin');

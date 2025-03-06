@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import style from './Pizzas.module.scss';
 import Header from '../../../../Home/Header/Header';
 import { useNavigate } from 'react-router-dom';
+import api from '../../../../../../../api'; // Ajusta la ruta según tu estructura
 
 export default function Pizzas() {
   const [pizzaItems, setPizzaItems] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Obtener productos de la subcategoría "Pizzas"
-    fetch('http://localhost:3001/productos/filter?subcategoria=Pizzas')
-      .then((res) => res.json())
-      .then((data) => setPizzaItems(data))
+    // Obtener productos de la subcategoría "Pizzas" utilizando la instancia de Axios
+    api.get('/productos/filter?subcategoria=Pizzas')
+      .then((res) => setPizzaItems(res.data))
       .catch((error) => console.error('Error fetching pizzas:', error));
   }, []);
 

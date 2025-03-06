@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Axios from "axios";
+//import Axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import api from '../../../../api'
 
 function Promos() {
   const [promos, setPromos] = useState([]);
@@ -14,7 +15,7 @@ function Promos() {
 
   // Obtener las promociones
   useEffect(() => {
-    Axios.get("http://localhost:3001/promos")
+    api.get("/promos")
       .then((response) => {
         setPromos(response.data);
       })
@@ -46,12 +47,12 @@ function Promos() {
   // Guardar cambios a la promo (actualizar)
   const guardarPromo = () => {
     const payload = { ...formData };
-    Axios.put(`http://localhost:3001/promos/${promoSeleccionada.id}`, payload)
+    api.put(`/promos/${promoSeleccionada.id}`, payload)
       .then(() => {
         setPromoSeleccionada(null);
         setFormData({ nombre: "", precio: "" });
         // Recargar lista de promos sin recargar la página
-        Axios.get("http://localhost:3001/promos")
+        api.get("/promos")
           .then((response) => {
             setPromos(response.data);
           })
@@ -62,10 +63,10 @@ function Promos() {
 
   // Eliminar promo
   const eliminarPromo = (id) => {
-    Axios.delete(`http://localhost:3001/promos/${id}`)
+    api.delete(`/promos/${id}`)
       .then(() => {
         setConfirmarEliminar(null);
-        Axios.get("http://localhost:3001/promos")
+        api.get("/promos")
           .then((response) => {
             setPromos(response.data);
           })

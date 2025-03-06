@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../Menu/Menu.module.scss';
 import { useNavigate } from 'react-router-dom';
+import api from '../../../../../api'; // Ajusta la ruta según tu estructura de carpetas
 
 export default function Menu() {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Llamado al endpoint para obtener todas las categorías
-    fetch('http://localhost:3001/categorias')
-      .then((res) => res.json())
-      .then((data) => setCategories(data))
+    // Llamado al endpoint para obtener todas las categorías usando la instancia de Axios
+    api.get('/categorias')
+      .then((res) => setCategories(res.data))
       .catch((error) => console.error('Error fetching categories:', error));
   }, []);
 
@@ -42,8 +42,6 @@ export default function Menu() {
         return '/';
     }
   };
-  
-  
 
   const handleNavigation = (categoryName) => {
     const route = mapCategoryToRoute(categoryName);

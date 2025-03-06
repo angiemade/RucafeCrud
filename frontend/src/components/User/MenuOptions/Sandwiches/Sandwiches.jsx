@@ -2,18 +2,16 @@ import React, { useEffect, useState } from 'react';
 import style from './Sandwiches.module.scss';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../Home/Header/Header';
+import api from '../../../../../api'; // Ajusta la ruta según la estructura de tu proyecto
 
 export default function Sandwiches() {
   const [sItems, setSItems] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Obtener productos de la subcategoría "Sándwiches"
-    fetch('http://localhost:3001/productos/filter?subcategoria=Sándwiches')
-      .then((res) => res.json())
-      .then((data) => {
-        setSItems(data);
-      })
+    // Obtener productos de la subcategoría "Sándwiches" usando Axios
+    api.get('/productos/filter?subcategoria=Sándwiches')
+      .then((res) => setSItems(res.data))
       .catch((error) => console.error('Error fetching Sandwiches items:', error));
   }, []);
 

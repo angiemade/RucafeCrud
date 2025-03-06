@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
-import Axios from 'axios';
+//import Axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Swal from 'sweetalert2';
+import api from '../../../../api'
+
 
 function Subcategorias() {
     const [nombreSubcategoria, setNombreSubcategoria] = useState("");
@@ -15,14 +17,14 @@ function Subcategorias() {
 
     // Obtener todas las categorías
     const getCategorias = () => {
-        Axios.get("http://localhost:3001/categorias").then((response) => {
+        api.get("/categorias").then((response) => {
             setCategorias(response.data);
         });
     };
 
     // Obtener todas las subcategorías
     const getSubcategorias = () => {
-        Axios.get("http://localhost:3001/subcategorias").then((response) => {
+        api.get("/subcategorias").then((response) => {
             setSubcategorias(response.data);
         });
     };
@@ -42,7 +44,7 @@ function Subcategorias() {
             return;
         }
 
-        Axios.post("http://localhost:3001/subcategorias", {
+        api.post("/subcategorias", {
             nombre: nombreSubcategoria,
             categoria_id: categoriaSeleccionada,
         })
@@ -74,7 +76,7 @@ function Subcategorias() {
     };
 
     const putSubcategoria = () => {
-        Axios.put(`http://localhost:3001/subcategorias/${idSubcategoria}`, {
+        api.put(`/subcategorias/${idSubcategoria}`, {
             nombre: nombreSubcategoria,
             categoria_id: categoriaSeleccionada,
         })
@@ -110,7 +112,7 @@ function Subcategorias() {
             confirmButtonText: "Sí, eliminar",
         }).then((result) => {
             if (result.isConfirmed) {
-                Axios.delete(`http://localhost:3001/subcategorias/${id}`).then(() => {
+                api.delete(`/subcategorias/${id}`).then(() => {
                     getSubcategorias();
                     Swal.fire({
                         title: "Eliminada!",

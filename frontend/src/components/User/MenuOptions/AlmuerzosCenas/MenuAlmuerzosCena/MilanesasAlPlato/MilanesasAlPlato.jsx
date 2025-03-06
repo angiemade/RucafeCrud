@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import style from './MilanesasAlPlato.module.scss';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../../../Home/Header/Header';
+import api from '../../../../../../../api'; // Ajusta la ruta según tu estructura
 
 export default function MilanesasAlPlato() {
   const [milanesasItems, setMilanesasItems] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Obtener productos de la subcategoría "Milanesas al Plato"
-    fetch('http://localhost:3001/productos/filter?subcategoria=Milanesas%20al%20plato')
-    .then((res) => res.json())
-      .then((data) => setMilanesasItems(data))
+    // Obtener productos de la subcategoría "Milanesas al Plato" usando la instancia de Axios
+    api.get('/productos/filter?subcategoria=Milanesas%20al%20plato')
+      .then((res) => setMilanesasItems(res.data))
       .catch((error) =>
         console.error('Error fetching Milanesas al Plato items:', error)
       );
@@ -28,7 +28,9 @@ export default function MilanesasAlPlato() {
             )}
           </div>
           <div className={style.itemPriceContainer}>
-            <span className={style.itemPrice}>${parseInt(item.precio)}</span>
+            <span className={style.itemPrice}>
+              ${parseInt(item.precio)}
+            </span>
           </div>
         </li>
       ))}

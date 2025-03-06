@@ -2,18 +2,16 @@ import React, { useEffect, useState } from 'react';
 import style from './Licuados.module.scss';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../Home/Header/Header';
+import api from '../../../../../api'; // Ajusta la ruta según la estructura de tu proyecto
 
 export default function Licuados() {
   const [lItems, setLItems] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Obtener productos de la subcategoría "Licuados"
-    fetch('http://localhost:3001/productos/filter?subcategoria=Licuados')
-      .then((res) => res.json())
-      .then((data) => {
-        setLItems(data);
-      })
+    // Obtener productos de la subcategoría "Licuados" usando Axios
+    api.get('/productos/filter?subcategoria=Licuados')
+      .then((res) => setLItems(res.data))
       .catch((error) => console.error('Error fetching Licuados items:', error));
   }, []);
 

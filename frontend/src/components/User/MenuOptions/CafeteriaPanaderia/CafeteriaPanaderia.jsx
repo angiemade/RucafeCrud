@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from '../CafeteriaPanaderia/CafeteriaPanaderia.module.scss';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../Home/Header/Header';
+import api from '../../../../../api'; // Ajusta la ruta según tu estructura
 
 export default function CafeteriaPanaderia() {
   const [caItems, setCaItems] = useState([]);
@@ -9,21 +10,23 @@ export default function CafeteriaPanaderia() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Obtener productos de la subcategoría "Cafeteria"
-    fetch('http://localhost:3001/productos/filter?subcategoria=Cafeteria')
-      .then((res) => res.json())
-      .then((data) => {
-        setCaItems(data);
+    // Obtener productos de la subcategoría "Cafeteria" usando Axios
+    api.get('/productos/filter?subcategoria=Cafeteria')
+      .then((res) => {
+        setCaItems(res.data);
       })
-      .catch((error) => console.error('Error fetching Cafeteria items:', error));
+      .catch((error) =>
+        console.error('Error fetching Cafeteria items:', error)
+      );
 
-    // Obtener productos de la subcategoría "Panaderia"
-    fetch('http://localhost:3001/productos/filter?subcategoria=Panaderia')
-      .then((res) => res.json())
-      .then((data) => {
-        setPItems(data);
+    // Obtener productos de la subcategoría "Panaderia" usando Axios
+    api.get('/productos/filter?subcategoria=Panaderia')
+      .then((res) => {
+        setPItems(res.data);
       })
-      .catch((error) => console.error('Error fetching Panaderia items:', error));
+      .catch((error) =>
+        console.error('Error fetching Panaderia items:', error)
+      );
   }, []);
 
   const ItemsList = ({ items }) => (

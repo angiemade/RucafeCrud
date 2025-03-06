@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
-import Axios from 'axios';
+//import Axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Swal from 'sweetalert2';
+import api from '../../../../api'
+
 
 function Categorias() {
     const [nombreCategoria, setNombreCategoria] = useState("");
@@ -13,7 +15,7 @@ function Categorias() {
 
     // Obtener todas las categorías
     const getCategorias = () => {
-        Axios.get("http://localhost:3001/categorias").then((response) => {
+        api.get("http://localhost:3001/categorias").then((response) => {
             setCategorias(response.data);
         });
     };
@@ -24,7 +26,7 @@ function Categorias() {
 
     // Agregar nueva categoría
     const addCategoria = () => {
-        Axios.post("http://localhost:3001/categorias", {
+        api.post("http://localhost:3001/categorias", {
             nombre: nombreCategoria,
         })
             .then(() => {
@@ -53,7 +55,7 @@ function Categorias() {
     };
 
     const putCategoria = () => {
-        Axios.put(`http://localhost:3001/categorias/${idCategoria}`, {
+        api.put(`http://localhost:3001/categorias/${idCategoria}`, {
             nombre: nombreCategoria,
         })
             .then(() => {
@@ -87,7 +89,7 @@ function Categorias() {
             confirmButtonText: "Sí, eliminar",
         }).then((result) => {
             if (result.isConfirmed) {
-                Axios.delete(`http://localhost:3001/categorias/${id}`).then(() => {
+                api.delete(`http://localhost:3001/categorias/${id}`).then(() => {
                     getCategorias();
                     Swal.fire({
                         title: "Eliminada!",

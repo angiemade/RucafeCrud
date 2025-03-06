@@ -1,8 +1,10 @@
 // CrearProductos.jsx
 import React, { useState, useEffect } from "react";
-import Axios from "axios";
+//import Axios from "axios";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
+import api from '../../../../api'
+
 
 function CrearProductos() {
   // Estados para los campos del formulario
@@ -15,7 +17,7 @@ function CrearProductos() {
 
   // Cargar las subcategorías al montar el componente
   useEffect(() => {
-    Axios.get("http://localhost:3001/subcategorias")
+    api.get("/subcategorias")
       .then((response) => {
         setSubcategorias(response.data);
       })
@@ -59,7 +61,7 @@ function CrearProductos() {
       subcategoria_id: subcategoriaId,
     };
 
-    Axios.post("http://localhost:3001/productos", payload)
+    api.post("/productos", payload)
       .then(() => {
         Swal.fire({
           icon: "success",

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from './Bebidas.module.scss';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../Home/Header/Header';
+import api from '../../../../../api'; // Ajusta la ruta según tu estructura
 
 export default function Bebidas() {
   const [sinAlcoholItems, setSinAlcoholItems] = useState([]);
@@ -9,21 +10,23 @@ export default function Bebidas() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Obtener productos de la subcategoría "Sin Alcohol"
-    fetch('http://localhost:3001/productos/filter?subcategoria=Sin%20Alcohol')
-      .then((res) => res.json())
-      .then((data) => {
-        setSinAlcoholItems(data);
+    // Obtener productos de la subcategoría "Sin Alcohol" usando Axios
+    api.get('/productos/filter?subcategoria=Sin%20Alcohol')
+      .then((res) => {
+        setSinAlcoholItems(res.data);
       })
-      .catch((error) => console.error('Error fetching Sin Alcohol items:', error));
+      .catch((error) =>
+        console.error('Error fetching Sin Alcohol items:', error)
+      );
 
-    // Obtener productos de la subcategoría "Con Alcohol"
-    fetch('http://localhost:3001/productos/filter?subcategoria=Con%20Alcohol')
-      .then((res) => res.json())
-      .then((data) => {
-        setConAlcoholItems(data);
+    // Obtener productos de la subcategoría "Con Alcohol" usando Axios
+    api.get('/productos/filter?subcategoria=Con%20Alcohol')
+      .then((res) => {
+        setConAlcoholItems(res.data);
       })
-      .catch((error) => console.error('Error fetching Con Alcohol items:', error));
+      .catch((error) =>
+        console.error('Error fetching Con Alcohol items:', error)
+      );
   }, []);
 
   // Componente interno para renderizar cada ítem

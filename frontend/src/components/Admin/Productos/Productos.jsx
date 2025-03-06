@@ -1,9 +1,11 @@
 // Productos.jsx
 import React, { useState, useEffect } from "react";
-import Axios from "axios";
+//import Axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import BarraProductos from "./BarraProductos";
+import api from '../../../../api'
+
 
 function Productos() {
   const [productos, setProductos] = useState([]);
@@ -21,7 +23,7 @@ function Productos() {
 
   // Obtener subcategorías para el formulario (si es necesario)
   useEffect(() => {
-    Axios.get("http://localhost:3001/subcategorias").then((response) => {
+    api.get("/subcategorias").then((response) => {
       setSubcategorias(response.data);
     });
   }, []);
@@ -30,7 +32,7 @@ function Productos() {
   useEffect(() => {
     // Si se selecciona categoría o hay término de búsqueda, usa el endpoint de búsqueda.
     if (selectedCategory || searchTerm) {
-      Axios.get("http://localhost:3001/productos/search", {
+      api.get("/productos/search", {
         params: {
           term: searchTerm,
           categoria: selectedCategory,
@@ -42,7 +44,7 @@ function Productos() {
         .catch((error) => console.error("Error fetching filtered products:", error));
     } else {
       // Si no hay filtro, obtener todos los productos.
-      Axios.get("http://localhost:3001/productos")
+      api.get("/productos")
         .then((response) => {
           setProductos(response.data);
         })
@@ -57,13 +59,13 @@ function Productos() {
     const handleProductoCreado = () => {
       // Repetir la misma lógica de arriba para volver a obtener productos
       if (selectedCategory || searchTerm) {
-        Axios.get("http://localhost:3001/productos/search", {
+        api.get("/productos/search", {
           params: { term: searchTerm, categoria: selectedCategory },
         })
           .then((response) => setProductos(response.data))
           .catch((error) => console.error("Error fetching filtered products:", error));
       } else {
-        Axios.get("http://localhost:3001/productos")
+        api.get("/productos")
           .then((response) => setProductos(response.data))
           .catch((error) => console.error("Error fetching products:", error));
       }
@@ -111,17 +113,17 @@ function Productos() {
     };
     delete payload.subcategoriaId;
 
-    Axios.put(`http://localhost:3001/productos/${productoSeleccionado.id}`, payload)
+    api.put(`/productos/${productoSeleccionado.id}`, payload)
       .then(() => {
         setProductoSeleccionado(null);
         setFormData({ nombre: "", descripcion: "", precio: "", subcategoriaId: "" });
         // Re-fetch products with current filters
         if (selectedCategory || searchTerm) {
-          Axios.get("http://localhost:3001/productos/search", {
+          api.get("/productos/search", {
             params: { term: searchTerm, categoria: selectedCategory },
           }).then((response) => setProductos(response.data));
         } else {
-          Axios.get("http://localhost:3001/productos").then((response) => setProductos(response.data));
+          api.get("/productos").then((response) => setProductos(response.data));
         }
       })
       .catch((error) => console.error("Error al guardar el producto:", error));
@@ -129,15 +131,15 @@ function Productos() {
 
   // Eliminar producto
   const eliminarProducto = (id) => {
-    Axios.delete(`http://localhost:3001/productos/${id}`)
+    api.delete(`/productos/${id}`)
       .then(() => {
         setConfirmarEliminar(null);
         if (selectedCategory || searchTerm) {
-          Axios.get("http://localhost:3001/productos/search", {
+          api.get("/productos/search", {
             params: { term: searchTerm, categoria: selectedCategory },
           }).then((response) => setProductos(response.data));
         } else {
-          Axios.get("http://localhost:3001/productos").then((response) => setProductos(response.data));
+          api.get("/productos").then((response) => setProductos(response.data));
         }
       })
       .catch((error) => console.error("Error al eliminar el producto:", error));

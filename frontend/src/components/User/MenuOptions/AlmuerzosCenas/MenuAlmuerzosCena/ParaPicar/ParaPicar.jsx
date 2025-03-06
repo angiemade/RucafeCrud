@@ -2,17 +2,19 @@ import React, { useEffect, useState } from 'react';
 import style from './ParaPicar.module.scss';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../../../Home/Header/Header';
+import api from '../../../../../../../api'; // Ajusta la ruta según tu estructura
 
 export default function ParaPicar() {
   const [picarItems, setPicarItems] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Llamado al endpoint para obtener productos de la subcategoría "Para Picar"
-    fetch('http://localhost:3001/productos/filter?subcategoria=Para%20Picar')
-      .then((res) => res.json())
-      .then((data) => setPicarItems(data))
-      .catch((error) => console.error('Error fetching Para Picar items:', error));
+    // Llamado al endpoint para obtener productos de la subcategoría "Para Picar" usando Axios
+    api.get('/productos/filter?subcategoria=Para%20Picar')
+      .then((res) => setPicarItems(res.data))
+      .catch((error) =>
+        console.error('Error fetching Para Picar items:', error)
+      );
   }, []);
 
   const ItemsList = ({ items }) => (
@@ -27,12 +29,9 @@ export default function ParaPicar() {
           </div>
           <div className={style.itemPriceContainer}>
             <span className={style.itemPrice}>
-              {
-                // Si el precio es numérico, se muestra como entero; de lo contrario se muestra tal cual.
-                isNaN(Number(item.precio))
-                  ? item.precio
-                  : `$${parseInt(item.precio)}`
-              }
+              {isNaN(Number(item.precio))
+                ? item.precio
+                : `$${parseInt(item.precio)}`}
             </span>
           </div>
         </li>

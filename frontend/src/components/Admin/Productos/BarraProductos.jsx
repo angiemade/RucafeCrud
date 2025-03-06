@@ -1,8 +1,9 @@
 // Barraproductos.jsx
 import React, { useState, useEffect } from "react";
-import Axios from "axios";
+//import Axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import api from '../../../../api'
 
 function BarraProductos({ selectedCategory, setSelectedCategory, searchTerm, setSearchTerm }) {
   const [categorias, setCategorias] = useState([]);
@@ -10,7 +11,7 @@ function BarraProductos({ selectedCategory, setSelectedCategory, searchTerm, set
 
   // Obtener las categorías del backend
   useEffect(() => {
-    Axios.get("http://localhost:3001/categorias")
+    api.get("/categorias")
       .then((response) => {
         setCategorias(response.data);
       })

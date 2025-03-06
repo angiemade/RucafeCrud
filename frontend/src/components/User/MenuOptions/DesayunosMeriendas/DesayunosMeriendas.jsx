@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from '../DesayunosMeriendas/DesayunosMeriendas.module.scss';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../Home/Header/Header';
+import api from '../../../../../api'; // Ajusta la ruta según la estructura de tu proyecto
 
 export default function DesayunosMeriendas() {
   const [DM_items, setDM_items] = useState([]);
@@ -10,19 +11,13 @@ export default function DesayunosMeriendas() {
 
   useEffect(() => {
     // Obtener productos de la subcategoría "Desayunos y Meriendas"
-    fetch('http://localhost:3001/productos/filter?subcategoria=Desayunos%20y%20Meriendas')
-      .then((res) => res.json())
-      .then((data) => {
-        setDM_items(data);
-      })
+    api.get('/productos/filter?subcategoria=Desayunos%20y%20Meriendas')
+      .then((res) => setDM_items(res.data))
       .catch((error) => console.error('Error fetching DM_items:', error));
 
     // Obtener productos de la subcategoría "Agregados"
-    fetch('http://localhost:3001/productos/filter?subcategoria=Agregados')
-      .then((res) => res.json())
-      .then((data) => {
-        setA_items(data);
-      })
+    api.get('/productos/filter?subcategoria=Agregados')
+      .then((res) => setA_items(res.data))
       .catch((error) => console.error('Error fetching A_items:', error));
   }, []);
 
