@@ -10,7 +10,7 @@
 
 
 // config.js (CommonJS)
-require('dotenv').config(); // opcional si usas un .env local
+//require('dotenv').config(); // opcional si usas un .env local
 
 module.exports = {
   PORT: process.env.PORT || 3001,
