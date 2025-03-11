@@ -1,3 +1,4 @@
+//index.js
 const express = require('express');
 const mysql2 = require('mysql2');
 const cors = require('cors');
@@ -10,11 +11,9 @@ const {
   DB_PORT
 } = require('./config'); 
 
-
 const app = express();
 app.use(express.json());
 app.use(cors());
-
 
 //mysql://root:TJizpSLZMlUEgCYrAlBLYqlbzwlscXJT@yamanote.proxy.rlwy.net:28204/railway
 const db = mysql2.createConnection({
@@ -24,7 +23,6 @@ const db = mysql2.createConnection({
   database: DB_NAME,
   port: DB_PORT, // importante para Railway
 });
-
 
 db.connect((err) => {
   if (err) {

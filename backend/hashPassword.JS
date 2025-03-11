@@ -1,6 +1,6 @@
-const bcrypt = require('bcrypt');
+//hashPassword.js
+const bcrypt = require('bcryptjs');
 const mysql2 = require('mysql2');
-
 const saltRounds = 10;
 const plainPassword = 'RUCAFE00'; // La contraseña original
 

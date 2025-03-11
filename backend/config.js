@@ -19,6 +19,7 @@ module.exports = {
   DB_PASSWORD: process.env.DB_PASSWORD || 'TJizpSLZMlUEgCYrAlBLYqlbzwlscXJT',
   DB_NAME: process.env.DB_NAME || 'rucafe',
   DB_PORT: process.env.DB_PORT || 28204, // O el puerto que uses en Railway
+  //DB_PORT: process.env.DB_PORT || 3306, // O el puerto que uses en Railway
 };
 
 

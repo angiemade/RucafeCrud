@@ -9,10 +9,7 @@ router.use((req, res, next) => {
   }
   next();
 });
-
 // En productosRoutes.js (endpoint para búsqueda)
-// OBTENER PRODUCTOS POR TÉRMINO DE BÚSQUEDA Y/O CATEGORÍA
-// Ejemplo: GET /productos/search?term=cafe&categoria=5
 router.get("/search", (req, res) => {
   const { term, categoria } = req.query;
   const db = req.db;
@@ -24,27 +21,22 @@ router.get("/search", (req, res) => {
   `;
   let params = [];
   const conditions = [];
-  
   if (term) {
     conditions.push("(productos.nombre LIKE ? OR productos.descripcion LIKE ?)");
     params.push(`%${term}%`, `%${term}%`);
   }
-  
   if (categoria) {
     conditions.push("categorias.id = ?");
     params.push(categoria);
   }
-  
   if (conditions.length > 0) {
     query += " WHERE " + conditions.join(" AND ");
   }
-  
   db.query(query, params, (err, results) => {
     if (err) return res.status(500).send(err);
     res.status(200).json(results);
   });
 });
-
 
 // OBTENER TODOS LOS PRODUCTOS
 router.get("/", (req, res) => {
@@ -62,7 +54,6 @@ router.get("/", (req, res) => {
     }
   );
 });
-
 
 // OBTENER PRODUCTOS POR SUBCATEGORÍA
 // Ejemplo de llamada: GET /productos/filter?subcategoria=Desayunos%20y%20Meriendas
@@ -120,7 +111,6 @@ router.get("/:id", (req, res) => {
   );
 });
 
-
 // CREAR UN PRODUCTO
 router.post("/", (req, res) => {
   const { nombre, descripcion, precio, precio2, subcategoria_id } = req.body;
@@ -168,7 +158,6 @@ router.put("/:id", (req, res) => {
     }
   );
 });
-
 
 // ELIMINAR UN PRODUCTO
 router.delete("/:id", (req, res) => {

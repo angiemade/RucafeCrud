@@ -6,7 +6,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import BarraProductos from "./BarraProductos";
 import api from '../../../../api'
 
-
 function Productos() {
   const [productos, setProductos] = useState([]);
   const [subcategorias, setSubcategorias] = useState([]);
@@ -52,8 +51,6 @@ function Productos() {
     }
   }, [selectedCategory, searchTerm]);
 
-
-
 // ----> Nuevo useEffect para escuchar el evento "productoCreado"
   useEffect(() => {
     const handleProductoCreado = () => {
@@ -79,11 +76,7 @@ function Productos() {
       window.removeEventListener("productoCreado", handleProductoCreado);
     };
   }, [selectedCategory, searchTerm]);
-
-
-
-
-
+  
   // Manejar cambios en el formulario de edición
   const handleInputChange = (e) => {
     const { name, value } = e.target;
